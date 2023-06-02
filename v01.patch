@@ -1,0 +1,100 @@
+Index: src/main/java/com/khalilou/keyclock/LoginService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/khalilou/keyclock/LoginService.java b/src/main/java/com/khalilou/keyclock/LoginService.java
+--- a/src/main/java/com/khalilou/keyclock/LoginService.java	
++++ b/src/main/java/com/khalilou/keyclock/LoginService.java	(date 1685711063454)
+@@ -21,9 +21,13 @@
+ //    @Value("${app.keycloak.client-id}")
+     private String clientId = "myapp";
+ 
+-    @Autowired
++
+     RestTemplate restTemplate;
+ 
++    public LoginService(RestTemplate restTemplate) {
++        this.restTemplate = restTemplate;
++    }
++
+     public ResponseEntity<LoginResponse> login (LoginRequest request){
+         HttpHeaders headers=new  HttpHeaders();
+         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+@@ -35,7 +39,9 @@
+         map.add("grant_type", grantType);
+ 
+         HttpEntity<MultiValueMap<String,String>> httpEntity=new HttpEntity<>(map,headers);
++        System.out.println(httpEntity.getBody());
+         ResponseEntity<LoginResponse> loginResponse =restTemplate.postForEntity(loginUrl, httpEntity,LoginResponse.class);
++        System.err.println(loginResponse.getBody());
+         return ResponseEntity.status(200).body(loginResponse.getBody());
+ 
+     }
+Index: src/main/java/com/khalilou/keyclock/LoginResponse.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/khalilou/keyclock/LoginResponse.java b/src/main/java/com/khalilou/keyclock/LoginResponse.java
+--- a/src/main/java/com/khalilou/keyclock/LoginResponse.java	
++++ b/src/main/java/com/khalilou/keyclock/LoginResponse.java	(date 1685711063445)
+@@ -4,8 +4,8 @@
+ 
+ @Data
+ public class LoginResponse {
+-    private String acces_tocken;
+-    private String refresh_tocken;
++    private String access_token;
++    private String refresh_token;
+     private String expires_in;
+     private String refresh_expires_in;
+     private String token_type;
+Index: src/main/java/com/khalilou/keyclock/SecurityConfig.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/khalilou/keyclock/SecurityConfig.java b/src/main/java/com/khalilou/keyclock/SecurityConfig.java
+--- a/src/main/java/com/khalilou/keyclock/SecurityConfig.java	
++++ b/src/main/java/com/khalilou/keyclock/SecurityConfig.java	(date 1685711063441)
+@@ -36,7 +36,7 @@
+         http.csrf().disable().cors().disable()
+                 .authorizeRequests()
+                 .antMatchers("/login", "/random").permitAll()
+-                .antMatchers("/user").hasRole("user")
++                .antMatchers("/user").hasAuthority("user")
+                 .antMatchers("/admin").hasRole("admin")
+                 .anyRequest()
+                 .authenticated();
+Index: src/main/java/com/khalilou/keyclock/LoginController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/khalilou/keyclock/LoginController.java b/src/main/java/com/khalilou/keyclock/LoginController.java
+--- a/src/main/java/com/khalilou/keyclock/LoginController.java	
++++ b/src/main/java/com/khalilou/keyclock/LoginController.java	(date 1685711063450)
+@@ -8,6 +8,7 @@
+ import org.springframework.web.bind.annotation.RestController;
+ 
+ import javax.servlet.http.HttpServlet;
++import javax.servlet.http.HttpServletRequest;
+ 
+ @RestController
+ public class LoginController {
+@@ -19,11 +20,11 @@
+         this.loginService = loginService;
+     }
+ 
+-    @PostMapping("login")
+-    public ResponseEntity<LoginResponse> login(HttpServlet request, @RequestBody LoginRequest loginRequest) throws Exception{
++    @PostMapping("/login")
++    public ResponseEntity<LoginResponse> login(HttpServletRequest request, @RequestBody LoginRequest loginRequest) throws Exception{
+         log.info("execution du login");
+-
+         ResponseEntity <LoginResponse> response =null;
++        log.info(loginRequest.getUsername()+"-----"+loginRequest.getPassword());
+         response = loginService.login(loginRequest);
+         return response;
+     }

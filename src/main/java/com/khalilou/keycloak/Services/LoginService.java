@@ -1,6 +1,8 @@
-package com.khalilou.keyclock;
+package com.khalilou.keycloak.Services;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.khalilou.keycloak.Entities.LoginRequest;
+import com.khalilou.keycloak.Entities.LoginResponse;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -12,13 +14,13 @@ import org.springframework.web.client.RestTemplate;
 
 @Service
 public class LoginService {
-//    @Value("${app.keycloack.login.url}")
-    private final String loginUrl= "http://localhost:8082/realms/myrealm/protocol/openid-connect/token";
-//    @Value("${app.keycloak.client-secret}")
-    private final String clientSecret= "ccyck2XBGJO7todBNFeyzIk5kEogbXZl";
-//    @Value("${app.keycloak.grant-type}")
-    private final  String grantType = "password";
-//    @Value("${app.keycloak.client-id}")
+    @Value("${app.keycloak.login.url}")
+    private  String loginUrl;
+    @Value("${app.keycloak.client-secret}")
+    private  String clientSecret;
+   @Value("${app.keycloak.grant-type}")
+    private  String grantType;
+   @Value("${app.keycloak.client-id}")
     private String clientId = "myapp";
 
 

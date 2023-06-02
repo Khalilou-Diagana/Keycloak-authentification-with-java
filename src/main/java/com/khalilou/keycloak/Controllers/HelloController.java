@@ -1,4 +1,4 @@
-package com.khalilou.keyclock;
+package com.khalilou.keycloak.Controllers;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;

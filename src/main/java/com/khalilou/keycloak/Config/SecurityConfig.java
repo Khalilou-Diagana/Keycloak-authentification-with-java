@@ -1,4 +1,4 @@
-package com.khalilou.keyclock;
+package com.khalilou.keycloak.Config;
 
 import org.keycloak.adapters.springsecurity.KeycloakConfiguration;
 import org.keycloak.adapters.springsecurity.authentication.KeycloakAuthenticationProvider;

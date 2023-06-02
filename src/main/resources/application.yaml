@@ -15,10 +15,10 @@ server:
 app:
   keycloak:
     login:
-      url: http://localhost:8082/auth/realms/demo/protocol/openid-connect/token
+      url: http://localhost:8082/realms/myrealm/protocol/openid-connect/token
     grant-type: password
     client-id: ${keycloak.resource}
-    client-secret: KsJ3WjU7DBT1brS9gCCkykBbw2y1pVIt
+    client-secret: ccyck2XBGJO7todBNFeyzIk5kEogbXZl
 
 
 

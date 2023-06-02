@@ -1,5 +1,8 @@
-package com.khalilou.keyclock;
+package com.khalilou.keycloak.Controllers;
 
+import com.khalilou.keycloak.Entities.LoginRequest;
+import com.khalilou.keycloak.Entities.LoginResponse;
+import com.khalilou.keycloak.Services.LoginService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -7,7 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 
 @RestController

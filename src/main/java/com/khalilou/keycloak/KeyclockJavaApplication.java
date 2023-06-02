@@ -1,4 +1,4 @@
-package com.khalilou.keyclock;
+package com.khalilou.keycloak;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

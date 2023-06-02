@@ -1,4 +1,4 @@
-package com.khalilou.keyclock;
+package com.khalilou.keycloak.Entities;
 
 import lombok.Data;
 
