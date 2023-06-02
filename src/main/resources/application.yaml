@@ -1,0 +1,28 @@
+keycloak:
+  realm: myrealm
+  resource: myapp
+  ssl-required: external
+  auth-server-url: http://localhost:8082/
+  use-resource-role-mappings: true
+
+security:
+  basic:
+    enabled: false
+
+server:
+  port: 8085
+
+app:
+  keycloak:
+    login:
+      url: http://localhost:8082/auth/realms/demo/protocol/openid-connect/token
+    grant-type: password
+    client-id: ${keycloak.resource}
+    client-secret: KsJ3WjU7DBT1brS9gCCkykBbw2y1pVIt
+
+
+
+
+
+
+
